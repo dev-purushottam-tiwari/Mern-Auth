@@ -12,7 +12,7 @@ const port = process.env.PORT;
 connectDB();
 app.use(cors(
   {
-    origin: 'http://localhost:5173',
+    origin: 'https://mern-auth-mocha-nu.vercel.app/',
     credentials: true
   }
 ))
