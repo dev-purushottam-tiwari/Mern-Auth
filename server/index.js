@@ -10,12 +10,13 @@ const app = express();
 const port = process.env.PORT;
 
 connectDB();
-app.use(cors(
-  {
-    origin: 'https://mern-auth-mocha-nu.vercel.app',
-    credentials: true
-  }
-))
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://mern-auth-mocha-nu.vercel.app'
+  ],
+  credentials: true
+}))
 
 
 
