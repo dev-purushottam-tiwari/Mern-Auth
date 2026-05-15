@@ -64,7 +64,7 @@ const EmailVerify = () => {
     }
 
     const { data } = await axios.post(
-      backendUrl + "/api/auth/verify-account",
+      backendUrl+"/api/auth/verify-account",
       { otp }
     );
 
@@ -116,7 +116,7 @@ useEffect(()=>{
         </div>
 
         <button className="w-full py-3 bg-gradient-to-r from-indigo-400 to-indigo-900 rounded-full">
-          Verify Email
+          Verify
         </button>
       </form>
     </div>

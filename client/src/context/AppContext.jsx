@@ -1,4 +1,4 @@
-import { createContext, use } from "react"
+import { createContext } from "react"
 import { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -9,38 +9,83 @@ axios.defaults.withCredentials = true
 export const AppContent =  createContext();
 
 export const AppContextProvider = (props) => {
+    axios.defaults.withCredentials = true
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const [isLoggedin, setIsLoggedIn] = useState(false);
     const [userData,setUserData] = useState(false);
 
-    const getUserData = async()=>{
-        try {
-            const {data} = await axios.get(backendUrl+'/api/user/data');
-             data.success ?
-             setUserData(data.userData) :
-             toast.error(data.message);
+    // const getUserData = async()=>{
+    //     try {
+    //         const {data} = await axios.get(backendUrl+'/api/user/data');
+    //          data.success ?
+    //          setUserData(data.userData) :
+    //          toast.error(data.message);
             
-        } catch (error) {
-           toast.error(error.message);
+    //     } catch (error) {
+    //        toast.error(error.message);
             
             
-        }
+    //     }
+    // }
+
+
+const getUserData = async () => {
+  try {
+    const { data } = await axios.get(backendUrl + '/api/user/data');
+
+    if (data.success) {
+      setUserData(data.userData);
     }
 
-    const getAuthState =async()=>{
-        try {
-            const {data} = await axios.post(backendUrl+'/api/auth/is-auth');
-            if(data.success){
-                setIsLoggedIn(true);
-                getUserData();
-            }
+  } catch (error) {
+    // silently ignore if not logged in
+    setUserData(false);
+  }
+};
+
+
+
+
+
+
+
+    // const getAuthState =async()=>{
+    //     console.log('hiii')
+    //     try {
+    //         const {data} = await axios.get(backendUrl+'/api/auth/is-auth');
+    //         if(data.success){
+    //             setIsLoggedIn(true);
+    //             getUserData();
+    //             console.log('biii')
+    //         }
             
-        } catch (error) {
-            toast.error(error.message);
+    //     } catch (error) {
+    //         toast.error(error.message);
             
-        }
+    //     }
+    // }
+
+
+
+
+
+    const getAuthState = async () => {
+  try {
+    const { data } = await axios.get(backendUrl + '/api/auth/is-auth');
+
+    if (data.success) {
+      setIsLoggedIn(true);
+      await getUserData();
+    } else {
+      setIsLoggedIn(false); // normal case
     }
+
+  } catch (error) {
+    // ❌ DO NOT SHOW TOAST HERE
+    setIsLoggedIn(false);
+  }
+};
     useEffect(()=>{
         getAuthState();
     },[])

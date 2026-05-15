@@ -161,7 +161,7 @@ export const ResetPassword = () => {
             ))}
           </div>
           <button className="w-full py-2.5 bg-gradient-to-r text-white from-indigo-500 to-indigo-900 rounded-full">
-            Verify Email
+            Verify
           </button>
         </form>
       )}
