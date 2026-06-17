@@ -183,7 +183,7 @@ Add screenshots of:
 ### Connect With Me
 
 * GitHub: https://github.com/dev-purushottam-tiwari
-* LinkedIn: Add Your LinkedIn Profile
+* LinkedIn: www.linkedin.com/in/purushottam-kr-tiwari
 
 ## ⭐ Support
 
