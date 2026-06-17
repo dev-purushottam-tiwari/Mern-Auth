@@ -32,6 +32,8 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
+console.log("USER:", process.env.SMTP_USER);
+console.log("PASS:", process.env.SMTP_PASS);
 
 app.listen(port, () => {
   console.log("api working on port " + port);

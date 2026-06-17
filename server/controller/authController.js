@@ -164,7 +164,7 @@ export const sendVerifyOtp = async (req, res) => {
       to: user.email,
       subject: "Account Verification OTP",
      
-      html:EMAIL_VERIFY_TEMPLATE.replace("{{otp}}",otp).replace("{{email}}",email)
+      html:EMAIL_VERIFY_TEMPLATE.replace("{{otp}}",otp).replace("{{email}}",user.email)
 
 
     };
@@ -184,54 +184,24 @@ export const sendVerifyOtp = async (req, res) => {
 };
 
 export const verifyEmail = async (req, res) => {
-  const userId = req.userId.email;
-  const { otp } = req.body;
+  console.log("verifyEmail API HIT");
 
-  if (!userId || !otp) {
-    return res.json({
-      success: false,
-      message: "invalid otp or user id",
-    });
-  }
+  
   try {
+    const userId = req.userId;
+    const { otp } = req.body;
+
+    console.log("req.userId =", userId);
+
     const user = await userModel.findById(userId);
 
-    if (!user) {
-      return res.json({ success: false, message: "User not found" });
-    }
-    if (
-      !user.verifyOtp ||
-      user.verifyOtp.toString() !== otp.toString().trim()
-    ) {
-      return res.json({
-        success: false,
-        message: "Invalid OTP",
-      });
-    }
+    console.log("user =", user);
 
-    if (user.verifyOtpExpiryAt < Date.now()) {
-      return res.json({
-        success: false,
-        message: "OTP expired",
-      });
-    }
-
-    user.isAccountVerified = true;
-
-    user.verifyOtp = '';
-    user.verifyOtpExpiryAt = 0;
-
-    await user.save();
-
-    return res.json({
-      success: true,
-      message: "Email verified successfully",
-    });
+    // rest of code...
   } catch (error) {
     return res.json({
-      success: false, 
+      success: false,
       message: error.message,
-      
     });
   }
 };

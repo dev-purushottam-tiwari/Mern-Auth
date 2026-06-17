@@ -51,32 +51,26 @@ const EmailVerify = () => {
       inputRefs.current[nextIndex].focus();
     }
   };
-  const onSubmitHandler = async (e) => {
+const onSubmitHandler = async (e) => {
   e.preventDefault();
+
+  console.log("Verify button clicked");
+  console.log("backendUrl =", backendUrl);
 
   try {
     const otpArray = inputRefs.current.map((input) => input.value);
     const otp = otpArray.join("");
 
-    if (otp.length !== 6) {
-      toast.error("Enter complete OTP");
-      return;
-    }
-
     const { data } = await axios.post(
-      backendUrl+"/api/auth/verify-account",
+      backendUrl + "/api/auth/verify-account",
       { otp }
     );
 
-    if (data.success) {
-      toast.success(data.message);
-      await getUserData();
-      navigate("/");
-    } else {
-      toast.error(data.message);
-    }
+    console.log("Response:", data);
+
+  
   } catch (error) {
-    toast.error(error.response?.data?.message || "Something went wrong");
+    console.log(error);
   }
 };
 useEffect(()=>{

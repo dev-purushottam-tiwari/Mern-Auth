@@ -21,7 +21,10 @@ authRouter.post("/logout", logout);
 
 authRouter.post("/send-verify-otp", userAuth, sendVerifyOtp);
 
-authRouter.post("/verify-account", userAuth, verifyEmail);
+authRouter.post("/verify-account", userAuth, (req, res, next) => {
+  console.log("VERIFY ROUTE HIT");
+  next();
+}, verifyEmail);
 
 authRouter.post("/is-auth", userAuth, isAuthenticated);
 
